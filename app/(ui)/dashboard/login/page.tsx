@@ -5,12 +5,11 @@ import Link from "next/link";
 
 const Login = () => {
   return (
-    <div className="login-container bg-linear-to-b from-light-orange-ems from-10% to-light-blue-ems w-screen h-screen flex justify-center items-center p-3 sm:p-0">
+    <div className="login-container h-full bg-transparent flex justify-center items-center p-3 sm:p-0">
       <div className="login-wrap w-full max-w-lg bg-white/50 p-6 rounded-lg shadow-md backdrop-sepia-0">
         <h2 className="text-2xl font-semibold leading-none text-gray-500 mb-7">
           Sign In
         </h2>
-
         <form className="space-y-4 max-w-2xs w-full m-auto pb-15 pt-7">
           <div>
             <label
@@ -49,7 +48,7 @@ const Login = () => {
           <div className="social-login">
             <Link
               href="#"
-              className="flex items-center hover:bg-gray-100 transition-colors"
+              className="flex items-center hover:bg-gray-400 transition-colors"
             >
               <FaGoogle className="text-red-500 mr-2" />
               <span className="text-gray-700">Sign in with Google</span>
@@ -65,12 +64,14 @@ const Login = () => {
               </Link>
             </div>
             <div>
-              <button
-                type="submit"
-                className="bg-dark-blue-ems text-white px-6 py-2 rounded-3xl hover:bg-medium-blue-ems transition-colors float-right"
-              >
-                Sign In
-              </button>
+              <Link href="/dashboard">
+                <button
+                  type="submit"
+                  className="bg-dark-blue-ems cursor-pointer text-white px-6 py-2 rounded-3xl hover:bg-medium-blue-ems transition-colors float-right"
+                >
+                  Sign In
+                </button>
+              </Link>
             </div>
           </div>
         </form>
