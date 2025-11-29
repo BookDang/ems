@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  nextjs-app:
+    build:
+      context: .
+      dockerfile: .docker/nextjs/dev/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nextjs-app:/app
+      - /app/node_modules
+    # command: npm run dev
