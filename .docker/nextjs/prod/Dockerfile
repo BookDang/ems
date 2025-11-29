@@ -5,13 +5,12 @@ WORKDIR /app
 
 RUN npm install -g pnpm
 
-COPY package.json pnpm-lock.yaml ./
+COPY ./nextjs-app/package.json ./nextjs-app/pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-COPY . .
+COPY ./nextjs-app/ .
 
 RUN pnpm run build
-
 
 #---
 FROM node:20.19.6-alpine AS runner
@@ -24,11 +23,12 @@ RUN adduser --system --uid 1001 nextjs
 
 WORKDIR /app
 
+RUN npm install -g pnpm
+
 COPY --from=builder /app/.next ./.next
-
 COPY --from=builder /app/public ./public
-
-COPY package.json ./
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install --prod
 
 RUN chown -R nextjs:nextjs /app
