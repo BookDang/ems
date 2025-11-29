@@ -5,7 +5,7 @@ ENV PORT 3000
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY ./nextjs-app/package.json ./nextjs-app/pnpm-lock.yaml ./
 
 RUN npm install -g pnpm
 
