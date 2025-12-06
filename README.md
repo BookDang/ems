@@ -1,24 +1,30 @@
 ## - Run project
 
+#### Pull project
+
+```ssh
+git clone git@github.com:BookDang/ems.git
+```
+
 #### Copy .env.dev to nextjs-app/.env
 
 ```bash
 cp .env.dev nextjs-app/.env
 ```
 
-### Build without cache
+#### Build without cache
 
 ```bash
 docker compose -f docker-compose.dev.yml build --no-cache
 ```
 
-### Run project on the production environment
+#### Run project on the production environment
 
 ```bash
 docker compose -f docker-compose.prod.yml up
 ```
 
-### Run project on the development environment
+#### Run project on the development environment
 
 ```bash
 docker compose -f docker-compose.dev.yml up
