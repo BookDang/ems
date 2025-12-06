@@ -6,6 +6,12 @@
 cd nextjs-app
 ```
 
+### Run pnpm install
+
+```bash
+pnpm install
+```
+
 ### 🔄 Pull Schema from Database
 
 ```bash

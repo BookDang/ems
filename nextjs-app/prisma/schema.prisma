@@ -8,137 +8,216 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  username     String
-  password     String
+  id            Int        @id @default(autoincrement())
+  username      String
+  password      String
   date_of_birth DateTime
-  last_name    String
-  first_name   String
-  address      String?  // nullable
-  email        String?  @unique
-  phone_number String?
-  created_at   DateTime?
-  updated_at   DateTime?
-
-  // Relations
-  teachers     Teacher[]
-  students     Student[]
-  parents      Parent[]
-  user_roles   UserRole[]
+  last_name     String
+  first_name    String
+  address       String?
+  email         String?    @unique
+  phone_number  String?
+  created_at    DateTime?
+  updated_at    DateTime?
+  parents       Parent[]
+  students      Student[]
+  teachers      Teacher[]
+  user_roles    UserRole[]
 }
 
-
 model Teacher {
-  id           Int      @id @default(autoincrement())
-  user_id      Int
-  expertise    Json
-  qualification Json
-  hire_date    DateTime
-  salary_basic Decimal
-  allowances   Json?
-  created_at   DateTime?
-  updated_at   DateTime?
-
-  // Relations
-  user         User     @relation(fields: [user_id], references: [id])
+  id             Int            @id @default(autoincrement())
+  user_id        Int
+  expertise      Json
+  qualification  Json
+  hire_date      DateTime
+  salary_basic   Decimal
+  allowances     Json?
+  created_at     DateTime?
+  updated_at     DateTime?
   class_teachers ClassTeacher[]
+  user           User           @relation(fields: [user_id], references: [id])
 }
 
 model Student {
-  id         Int      @id @default(autoincrement())
-  user_id    Int
-  parent_id  Int?
-  created_at DateTime?
-  updated_at DateTime?
-
-  // Relations
-  user       User     @relation(fields: [user_id], references: [id])
-  parent     Parent?  @relation("ParentToStudents", fields: [parent_id], references: [id])
+  id          Int          @id @default(autoincrement())
+  user_id     Int
+  parent_id   Int?
+  created_at  DateTime?
+  updated_at  DateTime?
   enrollments Enrollment[]
+  parent      Parent?      @relation("ParentToStudents", fields: [parent_id], references: [id])
+  user        User         @relation(fields: [user_id], references: [id])
 }
 
 model Parent {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   user_id    Int
   created_at DateTime?
   updated_at DateTime?
-
-  // Relations
-  user       User     @relation(fields: [user_id], references: [id])
+  user       User      @relation(fields: [user_id], references: [id])
   students   Student[] @relation("ParentToStudents")
 }
 
 model UserRole {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   user_id    Int
   role_id    Int
   created_at DateTime?
   updated_at DateTime?
-
-  // Relations
-  user       User     @relation(fields: [user_id], references: [id])
-  role       Role     @relation(fields: [role_id], references: [id])
+  role       Role      @relation(fields: [role_id], references: [id])
+  user       User      @relation(fields: [user_id], references: [id])
 }
 
 model Role {
-  id         Int      @id @default(autoincrement())
-  name       String
-  description String?
-  created_at DateTime?
-  updated_at DateTime?
-
-  // Relations
-  user_roles UserRole[]
+  id               Int              @id @default(autoincrement())
+  name             String
+  description      String?
+  created_at       DateTime?
+  updated_at       DateTime?
   role_permissions RolePermission[]
+  user_roles       UserRole[]
 }
 
 model Permission {
-  id         Int      @id @default(autoincrement())
-  name       String
-  description String?
-  module     String?
-  action     String?
-  created_at DateTime?
-  updated_at DateTime?
-
-  // Relations
+  id               Int              @id @default(autoincrement())
+  name             String
+  description      String?
+  module           String?
+  action           String?
+  created_at       DateTime?
+  updated_at       DateTime?
   role_permissions RolePermission[]
 }
 
 model RolePermission {
-  id            Int      @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   role_id       Int
   permission_id Int
   created_at    DateTime?
   updated_at    DateTime?
-
-  // Relations
-  role          Role     @relation(fields: [role_id], references: [id])
   permission    Permission @relation(fields: [permission_id], references: [id])
+  role          Role       @relation(fields: [role_id], references: [id])
 }
 
 model Subject {
-  id         Int      @id @default(autoincrement())
-  name       String?  @unique
-  slug_name  String?  @unique
+  id         Int       @id @default(autoincrement())
+  name       String?   @unique
+  slug_name  String?   @unique
   created_at DateTime?
   updated_at DateTime?
-
-  // Relations
   courses    Course[]
 }
 
 model Course {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   subject_id Int
   name       String
-  slug_name  String  @unique
+  slug_name  String    @unique
   created_at DateTime?
   updated_at DateTime?
-
-  // Relations
-  subject    Subject  @relation(fields: [subject_id], references: [id])
   classes    Class[]
+  subject    Subject   @relation(fields: [subject_id], references: [id])
+}
+
+model Class {
+  id               Int              @id @default(autoincrement())
+  course_id        Int
+  level            String?
+  name             String
+  slug_name        String
+  duration_weeks   Int
+  base_price       Decimal
+  material_fee     Decimal?         @default(0.00)
+  max_capacity     Int
+  start_date       DateTime
+  end_date         DateTime
+  status           ClassStatus      @default(Upcoming)
+  note             String?
+  created_at       DateTime?
+  updated_at       DateTime?
+  course           Course           @relation(fields: [course_id], references: [id])
+  class_promotions ClassPromotion[]
+  class_schedules  ClassSchedule[]
+  class_teachers   ClassTeacher[]
+  enrollments      Enrollment[]
+}
+
+model ClassSchedule {
+  id          Int       @id @default(autoincrement())
+  class_id    Int
+  room_id     Int
+  day_of_week Int
+  start_time  DateTime
+  end_time    DateTime
+  created_at  DateTime?
+  updated_at  DateTime?
+  class       Class     @relation(fields: [class_id], references: [id])
+  room        Room      @relation(fields: [room_id], references: [id])
+}
+
+model ClassTeacher {
+  id            Int         @id @default(autoincrement())
+  teacher_id    Int
+  class_id      Int
+  role_in_class RoleInClass @default(Main)
+  created_at    DateTime?
+  updated_at    DateTime?
+  class         Class       @relation(fields: [class_id], references: [id])
+  teacher       Teacher     @relation(fields: [teacher_id], references: [id])
+}
+
+model Enrollment {
+  id          Int               @id @default(autoincrement())
+  student_id  Int
+  class_id    Int
+  enroll_date DateTime
+  status      EnrollmentStatus? @default(Active)
+  class       Class             @relation(fields: [class_id], references: [id])
+  student     Student           @relation(fields: [student_id], references: [id])
+}
+
+model ClassPromotion {
+  id               Int       @id @default(autoincrement())
+  class_id         Int
+  promotion_id     Int
+  promo_start_date DateTime
+  promo_end_date   DateTime
+  max_applicants   Int?
+  is_active        Boolean   @default(true)
+  created_at       DateTime?
+  updated_at       DateTime?
+  class            Class     @relation(fields: [class_id], references: [id])
+  promotion        Promotion @relation(fields: [promotion_id], references: [id])
+}
+
+model Promotion {
+  id               Int              @id @default(autoincrement())
+  name             String
+  promo_code       String?          @unique
+  discount_type    DiscountType     @default(Percentage)
+  discount_value   Decimal
+  start_date       DateTime
+  end_date         DateTime
+  is_global        Boolean          @default(true)
+  max_usage_limit  Int?
+  status           PromotionStatus  @default(Active)
+  created_at       DateTime?
+  updated_at       DateTime?
+  class_promotions ClassPromotion[]
+}
+
+model Room {
+  id                Int             @id @default(autoincrement())
+  name              String          @unique
+  location          String?         @unique
+  capacity          Int
+  is_available      Boolean         @default(true)
+  equipment_details Json?
+  description       String?
+  created_at        DateTime?
+  updated_at        DateTime?
+  class_schedules   ClassSchedule[]
 }
 
 enum ClassStatus {
@@ -148,97 +227,16 @@ enum ClassStatus {
   Cancelled
 }
 
-model Class {
-  id             Int      @id @default(autoincrement())
-  course_id      Int
-  level          String?
-  name           String
-  slug_name      String
-  duration_weeks Int
-  base_price     Decimal
-  material_fee   Decimal? @default(0.00)
-  max_capacity   Int
-  start_date     DateTime
-  end_date       DateTime
-  status         ClassStatus   @default(Upcoming)
-  note           String?
-  created_at     DateTime?
-  updated_at     DateTime?
-
-  // Relations
-  course         Course   @relation(fields: [course_id], references: [id])
-  class_schedules ClassSchedule[]
-  class_teachers  ClassTeacher[]
-  enrollments     Enrollment[]
-  class_promotions ClassPromotion[]
-}
-
-model ClassSchedule {
-  id           Int      @id @default(autoincrement())
-  class_id     Int
-  room_id      Int
-  day_of_week  Int
-  start_time   DateTime
-  end_time     DateTime
-  created_at   DateTime?
-  updated_at   DateTime?
-
-  // Relations
-  class        Class    @relation(fields: [class_id], references: [id])
-  room         Room     @relation(fields: [room_id], references: [id])
-}
-
 enum RoleInClass {
   Main
   Assistant
   Substitute
 }
 
-model ClassTeacher {
-  id           Int      @id @default(autoincrement())
-  teacher_id   Int
-  class_id     Int
-  role_in_class RoleInClass @default(Main)
-  created_at   DateTime?
-  updated_at   DateTime?
-
-  // Relations
-  teacher      Teacher  @relation(fields: [teacher_id], references: [id])
-  class        Class    @relation(fields: [class_id], references: [id])
-}
-
 enum EnrollmentStatus {
-    Active
-    Completed
-    Dropped
-}
-
-model Enrollment {
-  id           Int      @id @default(autoincrement())
-  student_id   Int
-  class_id     Int
-  enroll_date  DateTime
-  status       EnrollmentStatus? @default(Active)
-
-  // Relations
-  student      Student  @relation(fields: [student_id], references: [id])
-  class        Class    @relation(fields: [class_id], references: [id])
-}
-
-model ClassPromotion {
-  id              Int      @id @default(autoincrement())
-  class_id        Int
-  promotion_id    Int
-  promo_start_date DateTime
-  promo_end_date  DateTime
-  max_applicants  Int?
-  is_active       Boolean  @default(true)
-  created_at      DateTime?
-  updated_at      DateTime?
-
-  // Relations
-  class           Class    @relation(fields: [class_id], references: [id])
-  promotion       Promotion @relation(fields: [promotion_id], references: [id])
+  Active
+  Completed
+  Dropped
 }
 
 enum DiscountType {
@@ -250,41 +248,3 @@ enum PromotionStatus {
   Active
   Inactive
 }
-
-model Promotion {
-  id              Int      @id @default(autoincrement())
-  name            String
-  promo_code      String?  @unique
-  discount_type   DiscountType @default(Percentage)
-  discount_value  Decimal
-  start_date      DateTime
-  end_date        DateTime
-  is_global       Boolean  @default(true)
-  max_usage_limit Int?
-  status          PromotionStatus @default(Active)
-  created_at      DateTime?
-  updated_at      DateTime?
-
-  // Relations
-  class_promotions ClassPromotion[]
-}
-
-model Room {
-  id              Int      @id @default(autoincrement())
-  name            String   @unique
-  location        String?  @unique
-  capacity        Int
-  is_available    Boolean  @default(true)
-  equipment_details Json?
-  description     String?
-  created_at      DateTime?
-  updated_at      DateTime?
-
-  // Relations
-  class_schedules ClassSchedule[]
-}
-
-
-
-
-
