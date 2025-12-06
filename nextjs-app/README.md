@@ -1,5 +1,11 @@
 ## - Prisma
 
+#### Root path
+
+```
+cd nextjs-app
+```
+
 ### 🔄 Pull Schema from Database
 
 ```bash
