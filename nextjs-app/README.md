@@ -1,4 +1,4 @@
-## - Prisma
+# - Prisma
 
 #### Root path
 
@@ -18,6 +18,7 @@ pnpm install
 npx prisma db pull
 ```
 
+## Run Database
 ### Accept 
 ```bash
 docker exec -it nextjs-app sh
