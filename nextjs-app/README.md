@@ -18,6 +18,11 @@ pnpm install
 npx prisma db pull
 ```
 
+### Accept 
+```bash
+docker exec -it nextjs-app sh
+```
+
 ### Generate the Prisma Client
 
 ```bash
