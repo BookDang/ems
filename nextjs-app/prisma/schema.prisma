@@ -9,16 +9,17 @@ datasource db {
 
 model User {
   id            Int        @id @default(autoincrement())
-  username      String
-  password      String
+  username      String     @db.VarChar(255)
+  password      String     @db.VarChar(20)
   date_of_birth DateTime
-  last_name     String
-  first_name    String
-  address       String?
-  email         String?    @unique
-  phone_number  String?
+  last_name     String     @db.VarChar(255)
+  first_name    String     @db.VarChar(255)
+  address       String?    @db.VarChar(500)
+  email         String?    @db.VarChar(50) @unique
+  phone_number  String?    @db.VarChar(20) @unique
   created_at    DateTime?
   updated_at    DateTime?
+
   parents       Parent[]
   students      Student[]
   teachers      Teacher[]
@@ -28,11 +29,11 @@ model User {
 model Teacher {
   id             Int            @id @default(autoincrement())
   user_id        Int
-  expertise      Json
-  qualification  Json
+  expertise      Json           @db.JsonB
+  qualification  Json           @db.JsonB
   hire_date      DateTime
-  salary_basic   Decimal
-  allowances     Json?
+  salary_basic   Decimal        @db.Decimal(10, 2) @default(0.00)
+  allowances     Json           @db.JsonB
   created_at     DateTime?
   updated_at     DateTime?
   class_teachers ClassTeacher[]
@@ -83,8 +84,8 @@ model Permission {
   id               Int              @id @default(autoincrement())
   name             String
   description      String?
-  module           String?
-  action           String?
+  module           String           @db.VarChar(50)
+  action           String           @db.VarChar(50)
   created_at       DateTime?
   updated_at       DateTime?
   role_permissions RolePermission[]
@@ -102,8 +103,8 @@ model RolePermission {
 
 model Subject {
   id         Int       @id @default(autoincrement())
-  name       String?   @unique
-  slug_name  String?   @unique
+  name       String    @unique @db.VarChar(255)
+  slug_name  String    @unique @db.VarChar(255)
   created_at DateTime?
   updated_at DateTime?
   courses    Course[]
@@ -112,8 +113,8 @@ model Subject {
 model Course {
   id         Int       @id @default(autoincrement())
   subject_id Int
-  name       String
-  slug_name  String    @unique
+  name       String    @db.VarChar(255)
+  slug_name  String    @db.VarChar(255)
   created_at DateTime?
   updated_at DateTime?
   classes    Class[]
@@ -123,12 +124,12 @@ model Course {
 model Class {
   id               Int              @id @default(autoincrement())
   course_id        Int
-  level            String?
-  name             String
-  slug_name        String
+  level            String           @db.VarChar(255)
+  name             String           @db.VarChar(255)
+  slug_name        String           @db.VarChar(255)
   duration_weeks   Int
-  base_price       Decimal
-  material_fee     Decimal?         @default(0.00)
+  base_price       Decimal          @db.Decimal(10, 2) @default(0.00)
+  material_fee     Decimal          @db.Decimal(10, 2) @default(0.00)
   max_capacity     Int
   start_date       DateTime
   end_date         DateTime
@@ -211,9 +212,9 @@ model Room {
   id                Int             @id @default(autoincrement())
   name              String          @unique
   location          String?         @unique
-  capacity          Int
+  capacity          Int             
   is_available      Boolean         @default(true)
-  equipment_details Json?
+  equipment_details Json?           @db.JsonB
   description       String?
   created_at        DateTime?
   updated_at        DateTime?
