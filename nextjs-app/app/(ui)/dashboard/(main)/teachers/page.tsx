@@ -1,6 +1,7 @@
 import React from "react"
 import { FaChalkboardTeacher } from "react-icons/fa"
 import PageTitle from "@/app/(ui)/dashboard/_components/common/PageTitle"
+import TeacherList from "@/app/(ui)/dashboard/_components/teacher/TeacherList"
 
 const Teacher: React.FC = () => {
     return (
@@ -15,6 +16,9 @@ const Teacher: React.FC = () => {
                     />
                 }
             />
+            <div className="mt-1">
+                <TeacherList teachers={[]} />
+            </div>
         </>
     )
 }

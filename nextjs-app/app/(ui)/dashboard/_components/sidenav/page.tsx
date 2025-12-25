@@ -12,7 +12,7 @@ const SideNav = () => {
                 <div>
                     <h2 className="text-2xl rounded-tl-xl font-bold text-white bg-dark-blue-ems/70 p-4 border-b border-gray-200">
                         <Link
-                            href="#"
+                            href="/dashboard"
                             className="hover:text-white block w-full h-full"
                         >
                             <span>EMS Dashboard</span>
