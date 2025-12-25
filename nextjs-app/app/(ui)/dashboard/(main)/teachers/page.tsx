@@ -8,7 +8,11 @@ const Teacher: React.FC = () => {
             <PageTitle
                 title="Teachers"
                 icon={
-                    <FaChalkboardTeacher size={28} className="text-gray-600" />
+                    <FaChalkboardTeacher
+                        size={28}
+                        className="text-medium-blue-ems
+                    "
+                    />
                 }
             />
         </>
