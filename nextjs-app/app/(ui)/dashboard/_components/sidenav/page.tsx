@@ -10,12 +10,11 @@ const SideNav = () => {
         <div className="side-nav h-full rounded-l-xl bg-white max-w-64 w-full fixed top-0 left-0 hidden sm:block sm:static ">
             <nav>
                 <div>
-                    <h2 className="text-2xl rounded-tl-xl font-bold text-light1-blue-ems bg-dark-blue-ems p-4 border-b border-gray-200">
+                    <h2 className="text-2xl rounded-tl-xl font-bold text-white bg-dark-blue-ems/70 p-4 border-b border-gray-200">
                         <Link
                             href="#"
                             className="hover:text-white block w-full h-full"
                         >
-                            {/* <LuLayoutDashboard className="inline mr-2 -mt-2 text-light-orange-ems" /> */}
                             <span>EMS Dashboard</span>
                         </Link>
                     </h2>
@@ -23,7 +22,7 @@ const SideNav = () => {
                 <ul className="flex flex-col p-4 space-y-6">
                     <li>
                         <Link
-                            href="#"
+                            href="/dashboard/teachers"
                             className=" w-full py-2 rounded-sm hover:bg-white/25 hover:shadow-sm shadow-light-orange-ems/30 block px-4"
                         >
                             <FaChalkboardTeacher className="inline mr-2 text-light-orange-ems" />
