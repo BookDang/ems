@@ -12,17 +12,10 @@ import {
 import React from "react"
 import Loading from "@/app/(ui)/dashboard/_components/common/Loading"
 import { cols } from "@/app/(ui)/dashboard/_components/teacher/data"
+import { UserI } from "@/interfaces/user"
 
 interface TeacherTableProps {
-    teachers: {
-        id: string
-        last_name: string
-        first_name: string
-        email: string
-        phone_number: string
-        date_of_birth: string
-        address: string
-    }[]
+    teachers: UserI[]
     isLoading?: boolean
 }
 
