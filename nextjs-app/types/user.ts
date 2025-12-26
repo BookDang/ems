@@ -1,4 +1,4 @@
-export interface UserI {
+export type UserT = {
     id: string
     first_name: string
     last_name: string
