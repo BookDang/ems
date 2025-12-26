@@ -22,7 +22,7 @@ const TeacherTableSkeleton: React.FC = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {[...Array(10)].map((_, index) => (
+                    {[...Array(11)].map((_, index) => (
                         <TableRow key={index}>
                             {cols.map((col) => (
                                 <TableCell key={col.key}>

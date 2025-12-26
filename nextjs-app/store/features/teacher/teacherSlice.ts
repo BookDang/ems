@@ -1,10 +1,8 @@
-import { Teacher, User } from "@/generated/prisma/browser"
+import { UserT } from "@/types/user"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-type TeacherType = User & Teacher
-
 type TeacherState = {
-    teachers: TeacherType[]
+    teachers: UserT[]
 }
 
 const initialState: TeacherState = {
@@ -15,11 +13,19 @@ export const teacherSlice = createSlice({
     name: "teacher",
     initialState,
     reducers: {
-        setTeachers(state, action: PayloadAction<TeacherType[]>) {
+        setTeachers(state, action: PayloadAction<UserT[]>) {
             state.teachers = action.payload
         },
-        addTeacher(state, action: PayloadAction<TeacherType>) {
+        addTeacher(state, action: PayloadAction<UserT>) {
             state.teachers.push(action.payload)
+        },
+        updateTeacher(state, action: PayloadAction<UserT>) {
+            const index = state.teachers.findIndex(
+                (teacher) => teacher.id === action.payload.id
+            )
+            if (index !== -1) {
+                state.teachers[index] = action.payload
+            }
         },
         removeTeacher(state, action: PayloadAction<number>) {
             state.teachers = state.teachers.filter(
