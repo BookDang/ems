@@ -9,15 +9,30 @@ import {
     TableCell,
     TableBody,
 } from "@mui/material"
-import React from "react"
+import React, { useEffect } from "react"
 import Loading from "@/app/(ui)/dashboard/_components/common/Loading"
 import { cols } from "@/app/(ui)/dashboard/_components/teacher/data"
-import { selectTeachers } from "@/store/features/teacher/teacherSlice"
-import { useSelector } from "react-redux"
+import {
+    selectTeachers,
+    setTeachers,
+} from "@/store/features/teacher/teacherSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { UserWithoutPasswordT } from "@/types/user"
 
-export const TeacherTable: React.FC = (props) => {
-    const [isLoading, setIsLoading] = React.useState(false)
+type TeacherTableProps = {
+    teachers: UserWithoutPasswordT[]
+}
+
+export const TeacherTable: React.FC<TeacherTableProps> = (props) => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setTeachers(props.teachers))
+    }, [props, dispatch])
+
     const teachers = useSelector(selectTeachers)
+    console.log("TeacherTable -> Teachers: ", teachers)
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -29,13 +44,7 @@ export const TeacherTable: React.FC = (props) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {isLoading ? (
-                        <TableRow>
-                            <TableCell colSpan={cols.length} align="center">
-                                <Loading />
-                            </TableCell>
-                        </TableRow>
-                    ) : teachers.length === 0 ? (
+                    {teachers.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan={cols.length} align="center">
                                 No teachers available.
@@ -49,9 +58,14 @@ export const TeacherTable: React.FC = (props) => {
                                 <TableCell>{teacher.email}</TableCell>
                                 <TableCell>{teacher.phone_number}</TableCell>
                                 <TableCell>
-                                    {teacher.date_of_birth instanceof Date
-                                        ? teacher.date_of_birth.toLocaleDateString()
-                                        : teacher.date_of_birth}
+                                    {teacher.date_of_birth
+                                        ? new Date(
+                                              teacher.date_of_birth
+                                          ).toLocaleDateString()
+                                        : ""}
+                                    <br />
+                                    {teacher.salary_basic +
+                                        teacher.salary_basic}
                                 </TableCell>
                                 <TableCell>{teacher.address}</TableCell>
                             </TableRow>
