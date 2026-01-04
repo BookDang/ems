@@ -8,7 +8,7 @@ import CreateTeacherStoreButton from "@/app/(ui)/dashboard/_components/teacher/C
 
 const Teacher: React.FC = async () => {
     return (
-        <>
+        <div className="flex flex-col h-full">
             <PageTitle
                 title="Teachers"
                 icon={
@@ -23,12 +23,12 @@ const Teacher: React.FC = async () => {
 
                 <CreateTeacherStoreButton />
             </PageTitle>
-            <div className="mt-1">
+            <div className="mt-1 flex-1 overflow-y-auto">
                 <Suspense fallback={<TeacherTableSkeleton />}>
                     <TeacherList />
                 </Suspense>
             </div>
-        </>
+        </div>
     )
 }
 
