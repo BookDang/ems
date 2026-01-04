@@ -43,6 +43,9 @@ export const teacherSlice = createSlice({
                 (teacher) => teacher.id !== action.payload
             )
         },
+        removeAllTeachers(state) {
+            state.teachers = []
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -85,7 +88,8 @@ export const fetchTeachers = createAsyncThunk(
     }
 )
 
-export const { setTeachers, addTeacher, removeTeacher } = teacherSlice.actions
+export const { setTeachers, addTeacher, removeTeacher, removeAllTeachers } =
+    teacherSlice.actions
 export const selectTeachers = (state: { teacher: TeacherState }) =>
     state.teacher.teachers
 export const loadingTeachers = (state: { teacher: TeacherState }) =>

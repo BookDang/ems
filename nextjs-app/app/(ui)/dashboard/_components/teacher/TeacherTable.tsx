@@ -10,7 +10,6 @@ import {
     TableBody,
 } from "@mui/material"
 import React, { useEffect } from "react"
-import Loading from "@/app/(ui)/dashboard/_components/common/Loading"
 import { cols } from "@/app/(ui)/dashboard/_components/teacher/data"
 import {
     selectTeachers,
