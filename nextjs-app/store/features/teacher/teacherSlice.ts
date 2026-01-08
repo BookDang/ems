@@ -1,5 +1,3 @@
-import { getTeachers } from "@/lib/data"
-import { UserWithoutPasswordT } from "@/types/user"
 import { handleResponse } from "@/utils/api"
 import {
     createAsyncThunk,
@@ -9,7 +7,8 @@ import {
 } from "@reduxjs/toolkit"
 
 type TeacherState = {
-    teachers: UserWithoutPasswordT[]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    teachers: any[]
     loading: boolean
     error: string | null
 }
@@ -24,13 +23,13 @@ export const teacherSlice = createSlice({
     name: "teacher",
     initialState,
     reducers: {
-        setTeachers(state, action: PayloadAction<UserWithoutPasswordT[]>) {
+        setTeachers(state, action: PayloadAction<unknown[]>) {
             state.teachers = action.payload
         },
-        addTeacher(state, action: PayloadAction<UserWithoutPasswordT>) {
+        addTeacher(state, action: PayloadAction<unknown>) {
             state.teachers.push(action.payload)
         },
-        updateTeacher(state, action: PayloadAction<UserWithoutPasswordT>) {
+        updateTeacher(state, action: PayloadAction<{ id: number }>) {
             const index = state.teachers.findIndex(
                 (teacher) => teacher.id === action.payload.id
             )
@@ -56,10 +55,7 @@ export const teacherSlice = createSlice({
             .addCase(fetchTeachers.fulfilled, (state, action) => {
                 state.loading = false
                 console.log("Fetched teachers:", action.payload)
-                const teachers: UserWithoutPasswordT[] =
-                    action.payload.teachers || []
-                // const teachersStr = action.payload
-                // const teachers = JSON.parse(teachersStr)
+                const teachers: unknown[] = action.payload.teachers || []
                 state.teachers = teachers
             })
             .addMatcher(
