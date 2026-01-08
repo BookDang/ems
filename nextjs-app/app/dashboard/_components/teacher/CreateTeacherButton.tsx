@@ -1,12 +1,11 @@
 "use client"
 
 import { useApi } from "@/hooks/useApi"
-import { UserWithoutPasswordT } from "@/types/user"
 import { handleResponse } from "@/utils/api"
 import { MdAutoAwesome } from "react-icons/md"
 
 const CreateTeacherButton: React.FC = () => {
-    const { isLoading, execute } = useApi<UserWithoutPasswordT[]>()
+    const { isLoading, execute } = useApi<[]>()
 
     const handleCreateMockTeachers = async () => {
         try {

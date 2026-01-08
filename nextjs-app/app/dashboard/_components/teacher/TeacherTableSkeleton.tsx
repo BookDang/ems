@@ -1,4 +1,4 @@
-import { cols } from "@/app/(ui)/dashboard/_components/teacher/data"
+import { cols } from "@/app/dashboard/_components/teacher/data"
 import {
     Paper,
     Skeleton,

@@ -1,6 +1,6 @@
 "use client"
 
-import { SideNav } from "@/app/(ui)/dashboard/_components"
+import { SideNav } from "@/app/dashboard/_components"
 import { store } from "@/store"
 import { Provider } from "react-redux"
 
