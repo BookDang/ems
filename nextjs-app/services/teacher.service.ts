@@ -1,4 +1,4 @@
-export const getTeachers = async () => {
+export const getTeachers = async (): Promise<unknown[]> => {
     try {
         await new Promise((resolve) => setTimeout(resolve, 3000))
         console.log("Đã chờ xong 3 giây!")
@@ -6,6 +6,8 @@ export const getTeachers = async () => {
         return []
     } catch (error) {
         console.error("Error fetching teachers:", error)
-        throw error
+        throw new Error(
+            error instanceof Error ? error.message : "Unknown error"
+        )
     }
 }

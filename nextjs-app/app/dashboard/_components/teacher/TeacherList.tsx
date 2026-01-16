@@ -10,7 +10,9 @@ export const TeacherList: React.FC = async () => {
         teachers = await getTeachers()
     } catch (error: unknown) {
         // errorMessage = error instanceof Error ? error.message : String(error)
-        throw new Error("Something went wrong while fetching teachers.")
+        throw new Error("Something went wrong while fetching teachers.", {
+            cause: error,
+        })
     }
 
     return <TeacherTable teachers={teachers} />
