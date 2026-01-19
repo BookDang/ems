@@ -15,7 +15,7 @@ type TeacherState = {
 
 const initialState: TeacherState = {
     teachers: [],
-    loading: false,
+    loading: true,
     error: null,
 }
 
@@ -25,6 +25,8 @@ export const teacherSlice = createSlice({
     reducers: {
         setTeachers(state, action: PayloadAction<unknown[]>) {
             state.teachers = action.payload
+            state.loading = false
+            state.error = null
         },
         addTeacher(state, action: PayloadAction<unknown>) {
             state.teachers.push(action.payload)

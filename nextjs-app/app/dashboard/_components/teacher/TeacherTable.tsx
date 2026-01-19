@@ -4,7 +4,6 @@ import {
     TableContainer,
     Paper,
     Table,
-    TableHead,
     TableRow,
     TableCell,
     TableBody,
@@ -15,6 +14,7 @@ import { CiCreditCard2 } from "react-icons/ci"
 import React, { useEffect } from "react"
 import { teacherCols } from "@/app/dashboard/_components/teacher/data"
 import {
+    loadingTeachers,
     selectTeachers,
     setTeachers,
 } from "@/store/features/teacher/teacherSlice"
@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { generateColumnDefs } from "@/utils/column-generator"
 import HeaderTable from "@/app/dashboard/_components/common/HeaderTable"
 import Link from "next/link"
+import TeacherTableSkeleton from "./TeacherTableSkeleton"
 
 type TeacherTableProps = {
     teachers: unknown[]
@@ -36,7 +37,12 @@ export const TeacherTable: React.FC<TeacherTableProps> = (props) => {
     }, [props, dispatch])
 
     const teachers = useSelector(selectTeachers)
+    const isLoading = useSelector(loadingTeachers)
     console.log("TeacherTable -> Teachers: ", teachers)
+
+    if (isLoading) {
+        return <TeacherTableSkeleton />
+    }
 
     return (
         <TableContainer component={Paper} sx={{ maxHeight: 640 }}>
