@@ -1,9 +1,10 @@
 import React from "react"
 import TeacherTable from "@/app/dashboard/_components/teacher/TeacherTable"
 import { getTeachers } from "@/services/teacher.service"
+import { ITeacher } from "@/types/teacher"
 
 export const TeacherList: React.FC = async () => {
-    let teachers: unknown[] = []
+    let teachers: ITeacher[] | unknown[] = []
 
     try {
         teachers = await getTeachers()

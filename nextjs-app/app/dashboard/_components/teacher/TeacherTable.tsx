@@ -23,9 +23,10 @@ import { generateColumnDefs } from "@/utils/column-generator"
 import HeaderTable from "@/app/dashboard/_components/common/HeaderTable"
 import Link from "next/link"
 import TeacherTableSkeleton from "./TeacherTableSkeleton"
+import { ITeacher } from "@/types/teacher"
 
 type TeacherTableProps = {
-    teachers: unknown[]
+    teachers: ITeacher[] | unknown[]
 }
 
 export const TeacherTable: React.FC<TeacherTableProps> = (props) => {
