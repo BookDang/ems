@@ -45,7 +45,7 @@ export const TeacherTable: React.FC<TeacherTableProps> = (props) => {
                         {columns.map((col) => (
                             <TableCell
                                 key={col.accessorKey}
-                                className="p-2 text-left"
+                                className="p-2 text-left !bg-light-blue-ems !text-white !font-semibold"
                             >
                                 {col.header}
                             </TableCell>

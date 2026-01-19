@@ -17,9 +17,11 @@ const createMockUser = (): IUser => {
         email: faker.internet.email({ firstName, lastName }),
         phoneNumber: faker.phone.number({ style: "national" }),
         address: faker.location.streetAddress({ useFullAddress: true }),
-        dateOfBirth: faker.date.birthdate({ min: 25, max: 60, mode: "age" }),
-        createdAt: faker.date.past(),
-        updatedAt: faker.date.recent(),
+        dateOfBirth: faker.date
+            .birthdate({ min: 25, max: 60, mode: "age" })
+            .toISOString(),
+        createdAt: faker.date.past().toISOString(),
+        updatedAt: faker.date.recent().toISOString(),
     }
 }
 
@@ -58,7 +60,7 @@ export const createMockTeacher = (): ITeacher => {
         ...user,
         expertise,
         qualification,
-        hireDate: faker.date.past({ years: 5 }),
+        hireDate: faker.date.past({ years: 5 }).toISOString(),
         salaryBasic: parseFloat(faker.commerce.price({ min: 1500, max: 5000 })),
         allowances: {
             housing: 500,

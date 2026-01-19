@@ -17,7 +17,7 @@ const Teacher: React.FC = async () => {
                     />
                 }
             />
-            <div className="mt-1 flex-1 overflow-y-auto">
+            <div className="mt-1 flex-1 overflow-hidden">
                 <Suspense fallback={<TeacherTableSkeleton />}>
                     <TeacherList />
                 </Suspense>
