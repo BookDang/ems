@@ -10,12 +10,13 @@ import {
     TableBody,
 } from "@mui/material"
 import React, { useEffect } from "react"
-import { cols } from "@/app/dashboard/_components/teacher/data"
+import { teacherCols } from "@/app/dashboard/_components/teacher/data"
 import {
     selectTeachers,
     setTeachers,
 } from "@/store/features/teacher/teacherSlice"
 import { useDispatch, useSelector } from "react-redux"
+import { generateColumnDefs } from "@/utils/column-generator"
 
 type TeacherTableProps = {
     teachers: unknown[]
@@ -23,6 +24,7 @@ type TeacherTableProps = {
 
 export const TeacherTable: React.FC<TeacherTableProps> = (props) => {
     const dispatch = useDispatch()
+    const columns = generateColumnDefs(teacherCols)
 
     useEffect(() => {
         dispatch(setTeachers(props.teachers))
@@ -32,40 +34,42 @@ export const TeacherTable: React.FC<TeacherTableProps> = (props) => {
     console.log("TeacherTable -> Teachers: ", teachers)
 
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper} sx={{ maxHeight: 640 }}>
+            <Table
+                sx={{ minWidth: 650 }}
+                aria-label="sticky table"
+                stickyHeader={true}
+            >
                 <TableHead>
                     <TableRow>
-                        {cols.map((col) => (
-                            <TableCell key={col.key}>{col.label}</TableCell>
+                        {columns.map((col) => (
+                            <TableCell
+                                key={col.accessorKey}
+                                className="p-2 text-left"
+                            >
+                                {col.header}
+                            </TableCell>
                         ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {teachers.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={cols.length} align="center">
+                            <TableCell colSpan={columns.length} align="center">
                                 No teachers available.
                             </TableCell>
                         </TableRow>
                     ) : (
                         teachers.map((teacher) => (
                             <TableRow key={teacher.id}>
-                                <TableCell>{teacher.last_name}</TableCell>
-                                <TableCell>{teacher.first_name}</TableCell>
-                                <TableCell>{teacher.email}</TableCell>
-                                <TableCell>{teacher.phone_number}</TableCell>
-                                <TableCell>
-                                    {teacher.date_of_birth
-                                        ? new Date(
-                                              teacher.date_of_birth
-                                          ).toLocaleDateString()
-                                        : ""}
-                                    <br />
-                                    {teacher.salary_basic +
-                                        teacher.salary_basic}
-                                </TableCell>
-                                <TableCell>{teacher.address}</TableCell>
+                                {columns.map((col) => (
+                                    <TableCell
+                                        key={col.accessorKey}
+                                        className="p-2"
+                                    >
+                                        {col.cell(teacher)}
+                                    </TableCell>
+                                ))}
                             </TableRow>
                         ))
                     )}

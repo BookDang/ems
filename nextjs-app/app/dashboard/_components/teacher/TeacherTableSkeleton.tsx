@@ -1,4 +1,4 @@
-import { cols } from "@/app/dashboard/_components/teacher/data"
+import { teacherCols } from "@/app/dashboard/_components/teacher/data"
 import {
     Paper,
     Skeleton,
@@ -16,7 +16,7 @@ const TeacherTableSkeleton: React.FC = () => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        {cols.map((col) => (
+                        {teacherCols.map((col) => (
                             <TableCell key={col.key}>{col.label}</TableCell>
                         ))}
                     </TableRow>
@@ -24,7 +24,7 @@ const TeacherTableSkeleton: React.FC = () => {
                 <TableBody>
                     {[...Array(11)].map((_, index) => (
                         <TableRow key={index}>
-                            {cols.map((col) => (
+                            {teacherCols.map((col) => (
                                 <TableCell key={col.key}>
                                     <Skeleton variant="text" />
                                 </TableCell>
