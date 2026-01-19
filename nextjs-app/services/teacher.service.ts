@@ -1,4 +1,4 @@
-import { generateMockTeachers } from "@/services/mocks/teachers.mock"
+import { getAllTeachers } from "@/services/mocks/teachers.mock"
 import { faker } from "@faker-js/faker"
 
 export const getTeachers = async (): Promise<unknown[]> => {
@@ -7,7 +7,8 @@ export const getTeachers = async (): Promise<unknown[]> => {
             setTimeout(resolve, faker.number.int({ min: 100, max: 5000 }))
         )
         // throw new Error("DATABASE_CONNECTION_FAILED")
-        const teachers = await generateMockTeachers(15)
+        // const teachers = await generateMockTeachers(15)
+        const teachers = await getAllTeachers()
         return teachers
     } catch (error) {
         console.error("Error fetching teachers:", error)
