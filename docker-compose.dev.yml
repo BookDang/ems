@@ -9,8 +9,6 @@ services:
         volumes:
             - ./nextjs-app:/app
             - /app/node_modules
-        depends_on:
-            - dev_postgres
 
 volumes:
     dev_pgdata:
