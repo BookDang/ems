@@ -1,12 +1,19 @@
 import { ReactNode } from "react"
 
-export interface IColumnConfig<T> {
+export interface IColumnConfig<T, S> {
     key: keyof T | string
     label: string
-    type: "string" | "date" | "number" | "action" | "boolean"
+    type:
+        | "string"
+        | "date"
+        | "number"
+        | "action"
+        | "boolean"
+        | "expertise"
+        | "qualification"
+        | "record"
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    render?: (value: any, row: T) => ReactNode
+    render?: (value: S, row: T) => ReactNode
 
     booleanLabels?: {
         true: ReactNode

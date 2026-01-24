@@ -12,7 +12,7 @@ export interface IQualification {
 }
 
 export interface ITeacher extends IUser {
-    expertise: IExpertise | string[]
+    expertise: IExpertise
     qualification: IQualification[]
     hireDate: string | Date
     salaryBasic: number

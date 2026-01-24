@@ -1,7 +1,7 @@
 import { IColumnConfig } from "@/types/table"
 import { ITeacher } from "@/types/teacher"
 
-export const teacherCols: IColumnConfig<ITeacher>[] = [
+export const teacherCols: IColumnConfig<ITeacher, unknown>[] = [
     {
         key: "lastName",
         label: "Last Name",

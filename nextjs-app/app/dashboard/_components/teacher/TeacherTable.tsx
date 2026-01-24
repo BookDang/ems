@@ -34,7 +34,9 @@ export const TeacherTable: React.FC<TeacherTableProps> = (props) => {
     const columns = generateColumnDefs(teacherCols)
 
     useEffect(() => {
-        dispatch(setTeachers(props.teachers))
+        if (Array.isArray(props.teachers)) {
+            dispatch(setTeachers(props.teachers as ITeacher[]))
+        }
     }, [props, dispatch])
 
     const teachers = useSelector(selectTeachers)

@@ -1,3 +1,4 @@
+import { ITeacher } from "@/types/teacher"
 import { handleResponse } from "@/utils/api"
 import {
     createAsyncThunk,
@@ -7,8 +8,7 @@ import {
 } from "@reduxjs/toolkit"
 
 type TeacherState = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    teachers: any[]
+    teachers: ITeacher[]
     loading: boolean
     error: string | null
 }
@@ -23,15 +23,15 @@ export const teacherSlice = createSlice({
     name: "teacher",
     initialState,
     reducers: {
-        setTeachers(state, action: PayloadAction<unknown[]>) {
+        setTeachers(state, action: PayloadAction<ITeacher[]>) {
             state.teachers = action.payload
             state.loading = false
             state.error = null
         },
-        addTeacher(state, action: PayloadAction<unknown>) {
+        addTeacher(state, action: PayloadAction<ITeacher>) {
             state.teachers.push(action.payload)
         },
-        updateTeacher(state, action: PayloadAction<{ id: number }>) {
+        updateTeacher(state, action: PayloadAction<ITeacher>) {
             const index = state.teachers.findIndex(
                 (teacher) => teacher.id === action.payload.id
             )
@@ -39,7 +39,7 @@ export const teacherSlice = createSlice({
                 state.teachers[index] = action.payload
             }
         },
-        removeTeacher(state, action: PayloadAction<number>) {
+        removeTeacher(state, action: PayloadAction<string>) {
             state.teachers = state.teachers.filter(
                 (teacher) => teacher.id !== action.payload
             )
@@ -58,7 +58,7 @@ export const teacherSlice = createSlice({
                 state.loading = false
                 console.log("Fetched teachers:", action.payload)
                 const teachers: unknown[] = action.payload.teachers || []
-                state.teachers = teachers
+                state.teachers = teachers as ITeacher[]
             })
             .addMatcher(
                 (action) => action.type.endsWith("/rejected"),
@@ -90,6 +90,9 @@ export const { setTeachers, addTeacher, removeTeacher, removeAllTeachers } =
     teacherSlice.actions
 export const selectTeachers = (state: { teacher: TeacherState }) =>
     state.teacher.teachers
+export const selectTeacherById =
+    (id: string) => (state: { teacher: TeacherState }) =>
+        state.teacher.teachers.find((teacher) => teacher.id === id)
 export const loadingTeachers = (state: { teacher: TeacherState }) =>
     state.teacher.loading
 export const errorTeachers = (state: { teacher: TeacherState }) =>
